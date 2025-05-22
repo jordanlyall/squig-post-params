@@ -74,7 +74,65 @@
         }
         
         .control-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .control-group:hover {
+            background: rgba(255, 0, 128, 0.02);
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            transform: translateY(-5px);
+        }
+        
+        .tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reset-button {
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            color: #FF0080;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
             margin-bottom: 20px;
+            width: 100%;
+        }
+        
+        .reset-button:hover {
+            background: rgba(255, 0, 128, 0.15);
+            border-color: #FF0080;
+            transform: translateY(-1px);
+        }
+        
+        .parameter-flash {
+            animation: parameterChange 0.4s ease;
+        }
+        
+        @keyframes parameterChange {
+            0% { background: rgba(255, 0, 128, 0.1); }
+            50% { background: rgba(255, 0, 128, 0.2); }
+            100% { background: rgba(255, 0, 128, 0.02); }
         }
         
         label {
@@ -97,24 +155,29 @@
             background: #f8f9fa;
             border: 1px solid #e5e5e5;
             color: #495057;
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px 10px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             font-size: 12px;
             text-align: center;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
         }
         
         .type-btn:hover {
             background: #e9ecef;
             border-color: #FF0080;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 0, 128, 0.15);
         }
         
         .type-btn.active {
             background: #FF0080;
             border-color: #FF0080;
             color: white;
+            box-shadow: 0 4px 12px rgba(255, 0, 128, 0.25);
         }
         
         input[type="range"] {
@@ -124,7 +187,12 @@
             border-radius: 3px;
             background: #e5e5e5;
             outline: none;
-            margin-top: 5px;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        input[type="range"]:hover {
+            background: #ddd;
         }
         
         input[type="range"]::-webkit-slider-thumb {
@@ -135,6 +203,13 @@
             border-radius: 50%;
             background: #FF0080;
             cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(255, 0, 128, 0.2);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(255, 0, 128, 0.3);
         }
         
         input[type="range"]::-moz-range-thumb {
@@ -144,6 +219,13 @@
             background: #FF0080;
             cursor: pointer;
             border: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(255, 0, 128, 0.2);
+        }
+        
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(255, 0, 128, 0.3);
         }
         
         .value-display {
@@ -151,6 +233,15 @@
             margin-left: 10px;
             color: #FF0080;
             font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            background: rgba(255, 0, 128, 0.05);
+        }
+        
+        .value-display:hover {
+            background: rgba(255, 0, 128, 0.1);
+            transform: translateY(-1px);
         }
         
         .toggle-switch {
@@ -174,8 +265,13 @@
             right: 0;
             bottom: 0;
             background-color: #e5e5e5;
-            transition: .3s;
+            transition: all .3s ease;
             border-radius: 24px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .toggle-slider:hover {
+            background-color: #ddd;
         }
         
         .toggle-slider:before {
@@ -186,16 +282,19 @@
             left: 3px;
             bottom: 3px;
             background-color: white;
-            transition: .3s;
+            transition: all .3s ease;
             border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         input:checked + .toggle-slider {
             background-color: #FF0080;
+            box-shadow: inset 0 2px 4px rgba(255, 0, 128, 0.2);
         }
         
         input:checked + .toggle-slider:before {
             transform: translateX(26px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
         
         .demo-note {
@@ -256,8 +355,8 @@
         
         #canvas-wrapper {
             background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -265,6 +364,12 @@
             width: 800px;
             height: 600px;
             position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 0, 128, 0.1);
+        }
+        
+        #canvas-wrapper:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 0, 128, 0.15);
         }
         
         #canvas-wrapper canvas {
@@ -295,13 +400,32 @@
             height: 8px;
             background: #28a745;
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            animation: pulse 2s infinite ease-in-out;
+            position: relative;
+        }
+        
+        .live-dot::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: #28a745;
+            opacity: 0.3;
+            animation: pulse-ring 2s infinite ease-in-out;
         }
         
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(1.4); opacity: 0; }
         }
         
         main {
@@ -325,7 +449,7 @@
             letter-spacing: 1px;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
             }
@@ -334,6 +458,51 @@
                 height: auto;
                 border-right: none;
                 border-bottom: 1px solid #e5e5e5;
+                padding: 20px;
+            }
+            .canvas-container {
+                padding: 20px;
+            }
+            #canvas-wrapper {
+                width: 100%;
+                max-width: 600px;
+                height: 450px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                padding: 15px;
+            }
+            .type-selector {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+            }
+            .type-btn {
+                padding: 10px 8px;
+                font-size: 11px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            .canvas-container {
+                padding: 15px;
+            }
+            #canvas-wrapper {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .controls {
+                padding: 12px;
+            }
+            .type-selector {
+                grid-template-columns: 1fr 1fr;
+            }
+            .control-group {
+                margin-bottom: 20px;
+                padding: 12px;
             }
         }
     </style>
@@ -341,7 +510,7 @@
 <body>
     <div class="container">
         <div class="controls">
-            <h1>Chromie Squiggle × PostParams</h1>
+            <h1>PostParams Interactive Demo</h1>
             <div class="subtitle">Art That Lives and Breathes On-Chain</div>
             
             <div class="info-box">
@@ -362,8 +531,10 @@
             
             <div class="section-header">Artist-Defined Parameters</div>
             
+            <button class="reset-button" onclick="resetToDefaults()">↻ Reset to Defaults</button>
+            
             <div class="control-group">
-                <label>TRAITS</label>
+                <label data-tooltip="Choose the visual appearance style of your squiggle">TRAITS</label>
                 <div class="type-selector">
                     <button class="type-btn active" onclick="setType('normal')">Normal</button>
                     <button class="type-btn" onclick="setType('slinky')">Slinky</button>
@@ -375,39 +546,23 @@
             </div>
             
             <div class="control-group">
-                <label>Hyper Mode</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="hyperToggle" onchange="toggleHyperMode(this.checked)">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-            
-            <div class="control-group">
-                <label>Start Color <span class="value-display" id="colorValue">128</span></label>
+                <label data-tooltip="Sets the base hue for the color spectrum">Start Color <span class="value-display" id="colorValue">128</span></label>
                 <input type="range" id="startColorSlider" min="0" max="255" value="128" oninput="updateStartColor(this.value)">
             </div>
             
             <div class="control-group">
-                <label>Animation Speed <span class="value-display" id="speedValue">1.0</span></label>
+                <label data-tooltip="Controls how fast the squiggle animates">Animation Speed <span class="value-display" id="speedValue">1.0</span></label>
                 <input type="range" id="speedSlider" min="0.1" max="20" step="0.1" value="1" oninput="updateSpeed(this.value)">
             </div>
             
             <div class="control-group">
-                <label>Segments <span class="value-display" id="segmentsValue">16</span></label>
+                <label data-tooltip="Number of curve segments that make up the squiggle">Segments <span class="value-display" id="segmentsValue">16</span></label>
                 <input type="range" id="segmentsSlider" min="12" max="20" value="16" oninput="updateSegments(this.value)">
             </div>
             
             <div class="control-group">
-                <label>Amplitude <span class="value-display" id="ampValue">1.0</span></label>
+                <label data-tooltip="Controls the height and intensity of the curves">Amplitude <span class="value-display" id="ampValue">1.0</span></label>
                 <input type="range" id="ampSlider" min="0.5" max="2" step="0.1" value="1" oninput="updateAmplitude(this.value)">
-            </div>
-            
-            <div class="control-group">
-                <label>Reverse Colors</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="reverseToggle" onchange="updateReverse(this.checked)">
-                    <span class="toggle-slider"></span>
-                </label>
             </div>
             
             <div class="instructions">
@@ -458,7 +613,6 @@
         let segments = 16;
         let amp = 1;
         let startColor = 128;
-        let reverse = false;
         let currentType = 'normal';
         
         // Type parameters
@@ -501,7 +655,7 @@
                     let t = i / steps;
                     let x = curvePoint(width / segments / wt * j, width / segments / wt * (j + 1), width / segments / wt * (j + 2), width / segments / wt * (j + 3), t);
                     let y = curvePoint(map(decPairs[j], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 1], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 2], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 3], 0, 255, -height / ht, height / ht) * amp, t);
-                    let hue = reverse ? 255 - (((color / spread) + startColor + index) % 255) : (((color / spread) + startColor) + index) % 255;
+                    let hue = (((color / spread) + startColor) + index) % 255;
 
                     if (fuzzy) {
                         noStroke();
@@ -578,6 +732,35 @@
 
         // PostParams Control Functions
         function setType(type) {
+            setTypeByName(type);
+        }
+
+        // Add flash effect to parameter updates
+
+        function updateAmplitude(value) {
+            amp = parseFloat(value);
+            document.getElementById('ampValue').textContent = value;
+            flashParameter(event.target.closest('.control-group'));
+        }
+
+        function resetToDefaults() {
+            // Reset all values to defaults
+            document.getElementById('startColorSlider').value = 128;
+            document.getElementById('speedSlider').value = 1;
+            document.getElementById('segmentsSlider').value = 16;
+            document.getElementById('ampSlider').value = 1;
+            
+            // Update JavaScript variables
+            updateStartColor(128);
+            updateSpeed(1);
+            updateSegments(16);
+            updateAmplitude(1);
+            
+            // Reset traits to normal
+            setTypeByName('normal');
+        }
+
+        function setTypeByName(type) {
             currentType = type;
             
             // Reset all type flags
@@ -611,52 +794,77 @@
             // Update UI
             document.querySelectorAll('.type-btn').forEach(btn => {
                 btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === type) {
+                    btn.classList.add('active');
+                }
             });
-            event.target.classList.add('active');
         }
 
+        function flashParameter(element) {
+            element.classList.add('parameter-flash');
+            setTimeout(() => {
+                element.classList.remove('parameter-flash');
+            }, 400);
+        }
+
+        // Tooltip functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const labels = document.querySelectorAll('label[data-tooltip]');
+            let activeTooltip = null;
+
+            labels.forEach(label => {
+                label.style.cursor = 'help';
+                
+                label.addEventListener('mouseenter', function(e) {
+                    if (activeTooltip) {
+                        activeTooltip.remove();
+                    }
+                    
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = this.getAttribute('data-tooltip');
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = rect.left + 'px';
+                    tooltip.style.top = (rect.top - tooltip.offsetHeight - 10) + 'px';
+                    
+                    setTimeout(() => tooltip.classList.add('show'), 10);
+                    activeTooltip = tooltip;
+                });
+                
+                label.addEventListener('mouseleave', function() {
+                    if (activeTooltip) {
+                        activeTooltip.classList.remove('show');
+                        setTimeout(() => {
+                            if (activeTooltip) {
+                                activeTooltip.remove();
+                                activeTooltip = null;
+                            }
+                        }, 200);
+                    }
+                });
+            });
+        });
+
+        // Add flash effect to parameter updates
         function updateStartColor(value) {
             startColor = parseInt(value);
             document.getElementById('colorValue').textContent = value;
+            flashParameter(document.getElementById('startColorSlider').closest('.control-group'));
         }
 
         function updateSpeed(value) {
             speed = parseFloat(value);
             document.getElementById('speedValue').textContent = value;
+            flashParameter(document.getElementById('speedSlider').closest('.control-group'));
         }
 
         function updateSegments(value) {
             segments = parseInt(value);
             document.getElementById('segmentsValue').textContent = value;
-        }
-
-        function updateAmplitude(value) {
-            amp = parseFloat(value);
-            document.getElementById('ampValue').textContent = value;
-        }
-
-        function updateReverse(checked) {
-            reverse = checked;
-        }
-
-        function toggleHyperMode(enabled) {
-            if (enabled) {
-                // Apply hyper settings
-                document.getElementById('speedSlider').value = 10;
-                document.getElementById('segmentsSlider').value = 20;
-                document.getElementById('ampSlider').value = 1.5;
-                updateSpeed(10);
-                updateSegments(20);
-                updateAmplitude(1.5);
-            } else {
-                // Return to normal settings
-                document.getElementById('speedSlider').value = 1;
-                document.getElementById('segmentsSlider').value = 16;
-                document.getElementById('ampSlider').value = 1;
-                updateSpeed(1);
-                updateSegments(16);
-                updateAmplitude(1);
-            }
+            flashParameter(document.getElementById('segmentsSlider').closest('.control-group'));
         }
     </script>
 </body>
