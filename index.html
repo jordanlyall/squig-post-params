@@ -219,13 +219,18 @@
         }
         
         .instructions {
-            background: #1f1f1f;
+            background: rgba(255, 0, 128, 0.05);
+            border: 1px solid rgba(255, 0, 128, 0.2);
             padding: 15px;
             border-radius: 6px;
             font-size: 12px;
             line-height: 1.5;
-            color: #888;
+            color: #495057;
             margin-top: 20px;
+        }
+        
+        .instructions strong {
+            color: #FF0080;
         }
         
         .cta-button {
@@ -249,7 +254,22 @@
         }
         
         #canvas-wrapper {
-            background: #000;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 800px;
+            height: 600px;
+            position: relative;
+        }
+        
+        #canvas-wrapper canvas {
+            display: block;
+            margin: 0;
+            padding: 0;
         }
         
         .live-indicator {
@@ -277,6 +297,12 @@
             animation: pulse 2s infinite;
         }
         
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
         main {
             margin: 0;
             padding: 0;
@@ -286,25 +312,6 @@
             display: block !important;
             margin: 0 !important;
             padding: 0 !important;
-        }
-        
-        .share-button {
-            background: #f8f9fa;
-            border: 1px solid #e5e5e5;
-            color: #495057;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 13px;
-            width: 100%;
-            margin-top: 15px;
-            font-weight: 500;
-        }
-        
-        .share-button:hover {
-            background: #e9ecef;
-            border-color: #667eea;
         }
         
         @media (max-width: 768px) {
@@ -397,10 +404,6 @@
                 • Press SPACE to cycle backgrounds<br>
                 • With PostParams, these changes would be stored on-chain and reflected everywhere the NFT appears
             </div>
-            
-            <button class="share-button" onclick="shareConfiguration()">
-                Share Configuration 🔗
-            </button>
         </div>
         
         <div class="canvas-container">
@@ -642,83 +645,6 @@
                 updateAmplitude(1);
             }
         }
-        
-        function shareConfiguration() {
-            const params = {
-                type: currentType,
-                color: startColor,
-                speed: speed,
-                segments: segments,
-                amp: amp,
-                reverse: reverse,
-                hyper: document.getElementById('hyperToggle').checked
-            };
-            
-            const url = new URL(window.location.href);
-            url.searchParams.set('config', btoa(JSON.stringify(params)));
-            
-            navigator.clipboard.writeText(url.toString()).then(() => {
-                alert('Configuration URL copied to clipboard! Share it with others to show your unique Squiggle settings.');
-            }).catch(() => {
-                prompt('Copy this URL to share your configuration:', url.toString());
-            });
-        }
-        
-        // Load configuration from URL if present
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const config = urlParams.get('config');
-            
-            if (config) {
-                try {
-                    const params = JSON.parse(atob(config));
-                    
-                    // Apply loaded configuration
-                    if (params.type) {
-                        setType(params.type);
-                        // Update UI to show correct type button
-                        document.querySelectorAll('.type-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                            if (btn.textContent.toLowerCase() === params.type) {
-                                btn.classList.add('active');
-                            }
-                        });
-                    }
-                    
-                    if (params.color !== undefined) {
-                        document.getElementById('startColorSlider').value = params.color;
-                        updateStartColor(params.color);
-                    }
-                    
-                    if (params.speed !== undefined) {
-                        document.getElementById('speedSlider').value = params.speed;
-                        updateSpeed(params.speed);
-                    }
-                    
-                    if (params.segments !== undefined) {
-                        document.getElementById('segmentsSlider').value = params.segments;
-                        updateSegments(params.segments);
-                    }
-                    
-                    if (params.amp !== undefined) {
-                        document.getElementById('ampSlider').value = params.amp;
-                        updateAmplitude(params.amp);
-                    }
-                    
-                    if (params.reverse !== undefined) {
-                        document.getElementById('reverseToggle').checked = params.reverse;
-                        updateReverse(params.reverse);
-                    }
-                    
-                    if (params.hyper !== undefined) {
-                        document.getElementById('hyperToggle').checked = params.hyper;
-                        toggleHyperMode(params.hyper);
-                    }
-                } catch (e) {
-                    console.error('Failed to load configuration:', e);
-                }
-            }
-        });
     </script>
 </body>
 </html>
