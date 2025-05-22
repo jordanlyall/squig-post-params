@@ -14,8 +14,8 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            background: #f5f5f5;
+            color: #1a1a1a;
             overflow-x: hidden;
         }
         
@@ -26,10 +26,11 @@
         
         .controls {
             width: 400px;
-            background: #1a1a1a;
+            background: #ffffff;
             padding: 30px;
             overflow-y: auto;
-            border-right: 1px solid #333;
+            border-right: 1px solid #e5e5e5;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
         }
         
         .canvas-container {
@@ -37,8 +38,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000;
+            background: #fafafa;
             position: relative;
+            padding: 40px;
         }
         
         h1 {
@@ -51,18 +53,19 @@
         
         .subtitle {
             font-size: 14px;
-            color: #888;
+            color: #6c757d;
             margin-bottom: 30px;
         }
         
         .info-box {
-            background: #222;
+            background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 25px;
             font-size: 13px;
             line-height: 1.6;
-            border: 1px solid #333;
+            border: 1px solid #e5e5e5;
+            color: #495057;
         }
         
         .info-box strong {
@@ -70,7 +73,7 @@
         }
         
         .control-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         label {
@@ -79,35 +82,8 @@
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #aaa;
-        }
-        
-        .preset-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .preset-btn {
-            background: #2a2a2a;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 13px;
-        }
-        
-        .preset-btn:hover {
-            background: #3a3a3a;
-            border-color: #667eea;
-        }
-        
-        .preset-btn.active {
-            background: #667eea;
-            border-color: #667eea;
+            color: #495057;
+            font-weight: 500;
         }
         
         .type-selector {
@@ -117,24 +93,27 @@
         }
         
         .type-btn {
-            background: #2a2a2a;
-            border: 1px solid #444;
-            color: #fff;
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            color: #495057;
             padding: 10px;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 12px;
             text-align: center;
+            font-weight: 500;
         }
         
         .type-btn:hover {
-            background: #3a3a3a;
+            background: #e9ecef;
+            border-color: #667eea;
         }
         
         .type-btn.active {
             background: #667eea;
             border-color: #667eea;
+            color: white;
         }
         
         input[type="range"] {
@@ -142,7 +121,7 @@
             -webkit-appearance: none;
             height: 6px;
             border-radius: 3px;
-            background: #333;
+            background: #e5e5e5;
             outline: none;
             margin-top: 5px;
         }
@@ -193,7 +172,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #333;
+            background-color: #e5e5e5;
             transition: .3s;
             border-radius: 24px;
         }
@@ -218,10 +197,25 @@
             transform: translateX(26px);
         }
         
+        .demo-note {
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #495057;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .demo-note strong {
+            color: #667eea;
+        }
+        
         .divider {
             height: 1px;
-            background: #333;
-            margin: 30px 0;
+            background: #e5e5e5;
+            margin: 25px 0;
         }
         
         .instructions {
@@ -234,8 +228,83 @@
             margin-top: 20px;
         }
         
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
         #canvas-wrapper {
             background: #000;
+        }
+        
+        .live-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #667eea;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        main {
+            margin: 0;
+            padding: 0;
+        }
+        
+        canvas {
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .share-button {
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            color: #495057;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            width: 100%;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+        
+        .share-button:hover {
+            background: #e9ecef;
+            border-color: #667eea;
         }
         
         @media (max-width: 768px) {
@@ -246,7 +315,7 @@
                 width: 100%;
                 height: auto;
                 border-right: none;
-                border-bottom: 1px solid #333;
+                border-bottom: 1px solid #e5e5e5;
             }
         }
     </style>
@@ -255,22 +324,21 @@
     <div class="container">
         <div class="controls">
             <h1>Chromie Squiggle × PostParams</h1>
-            <div class="subtitle">Post-Mint Parameters Demo</div>
+            <div class="subtitle">PostParams Demo</div>
             
             <div class="info-box">
                 <strong>What if Chromie Squiggles had PostParams?</strong><br>
-                Explore how Post-Mint Parameters could transform the iconic genesis Art Blocks project. 
+                Explore how PostParams could transform the iconic genesis Art Blocks project. 
                 Adjust the controls below to see how collectors could personalize their Squiggle while preserving its essence.
             </div>
             
-            <div class="control-group">
-                <label>Preset Moods</label>
-                <div class="preset-buttons">
-                    <button class="preset-btn active" onclick="setPreset('classic')">Classic</button>
-                    <button class="preset-btn" onclick="setPreset('zen')">Zen</button>
-                    <button class="preset-btn" onclick="setPreset('hyper')">Hyper</button>
-                    <button class="preset-btn" onclick="setPreset('custom')">Custom</button>
-                </div>
+            <a href="https://artblocks.io/postparams" target="_blank" class="cta-button">
+                Learn More About PostParams →
+            </a>
+            
+            <div class="demo-note">
+                <strong>Demo Only:</strong> This is an interactive demonstration of PostParams capabilities. 
+                Actual Chromie Squiggles do not have PostParams functionality.
             </div>
             
             <div class="divider"></div>
@@ -285,6 +353,14 @@
                     <button class="type-btn" onclick="setType('bold')">Bold</button>
                     <button class="type-btn" onclick="setType('ribbed')">Ribbed</button>
                 </div>
+            </div>
+            
+            <div class="control-group">
+                <label>Hyper Mode</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="hyperToggle" onchange="toggleHyperMode(this.checked)">
+                    <span class="toggle-slider"></span>
+                </label>
             </div>
             
             <div class="control-group">
@@ -321,10 +397,18 @@
                 • Press SPACE to cycle backgrounds<br>
                 • With PostParams, these changes would be stored on-chain and reflected everywhere the NFT appears
             </div>
+            
+            <button class="share-button" onclick="shareConfiguration()">
+                Share Configuration 🔗
+            </button>
         </div>
         
         <div class="canvas-container">
             <div id="canvas-wrapper"></div>
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                Live Preview
+            </div>
         </div>
     </div>
 
@@ -348,7 +432,7 @@
         let seed = parseInt(tokenData.hashes[0].slice(0, 16), 16);
         let color;
         let backgroundIndex = 0;
-        let backgroundArray = [255, 225, 200, 175, 150, 125, 100, 75, 50, 25, 0, 25, 50, 75, 100, 125, 150, 175, 200, 225];
+        let backgroundArray = [255, 250, 245, 240, 235, 230, 225, 220, 215, 210, 205, 200, 195, 190, 185, 180, 175, 170, 165, 160];
         let index = 0;
         let ht;
         let wt = 2;
@@ -378,11 +462,18 @@
             ht = 3.5;
             spread = 25;
             strokeWeight(height/1200);
+            // Ensure initial background is white
+            background(255);
         }
 
         function draw() {
             color = 0;
-            background(backgroundArray[backgroundIndex]);
+            // Use RGB mode for background to ensure proper light colors
+            push();
+            colorMode(RGB);
+            let bgValue = backgroundArray[backgroundIndex];
+            background(bgValue, bgValue, bgValue);
+            pop();
             let div = 10;
             let steps = slinky ? 50 : fuzzy ? 1000 : 200;
             
@@ -532,45 +623,102 @@
             reverse = checked;
         }
 
-        function setPreset(preset) {
-            // Update UI
-            document.querySelectorAll('.preset-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            switch(preset) {
-                case 'zen':
-                    document.getElementById('speedSlider').value = 0.5;
-                    document.getElementById('segmentsSlider').value = 14;
-                    document.getElementById('ampSlider').value = 0.7;
-                    updateSpeed(0.5);
-                    updateSegments(14);
-                    updateAmplitude(0.7);
-                    break;
-                case 'hyper':
-                    document.getElementById('speedSlider').value = 10;
-                    document.getElementById('segmentsSlider').value = 20;
-                    document.getElementById('ampSlider').value = 1.5;
-                    updateSpeed(10);
-                    updateSegments(20);
-                    updateAmplitude(1.5);
-                    break;
-                case 'classic':
-                    document.getElementById('speedSlider').value = 1;
-                    document.getElementById('segmentsSlider').value = 16;
-                    document.getElementById('ampSlider').value = 1;
-                    document.getElementById('startColorSlider').value = 128;
-                    document.getElementById('reverseToggle').checked = false;
-                    updateSpeed(1);
-                    updateSegments(16);
-                    updateAmplitude(1);
-                    updateStartColor(128);
-                    updateReverse(false);
-                    setType('normal');
-                    break;
+        function toggleHyperMode(enabled) {
+            if (enabled) {
+                // Apply hyper settings
+                document.getElementById('speedSlider').value = 10;
+                document.getElementById('segmentsSlider').value = 20;
+                document.getElementById('ampSlider').value = 1.5;
+                updateSpeed(10);
+                updateSegments(20);
+                updateAmplitude(1.5);
+            } else {
+                // Return to normal settings
+                document.getElementById('speedSlider').value = 1;
+                document.getElementById('segmentsSlider').value = 16;
+                document.getElementById('ampSlider').value = 1;
+                updateSpeed(1);
+                updateSegments(16);
+                updateAmplitude(1);
             }
         }
+        
+        function shareConfiguration() {
+            const params = {
+                type: currentType,
+                color: startColor,
+                speed: speed,
+                segments: segments,
+                amp: amp,
+                reverse: reverse,
+                hyper: document.getElementById('hyperToggle').checked
+            };
+            
+            const url = new URL(window.location.href);
+            url.searchParams.set('config', btoa(JSON.stringify(params)));
+            
+            navigator.clipboard.writeText(url.toString()).then(() => {
+                alert('Configuration URL copied to clipboard! Share it with others to show your unique Squiggle settings.');
+            }).catch(() => {
+                prompt('Copy this URL to share your configuration:', url.toString());
+            });
+        }
+        
+        // Load configuration from URL if present
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const config = urlParams.get('config');
+            
+            if (config) {
+                try {
+                    const params = JSON.parse(atob(config));
+                    
+                    // Apply loaded configuration
+                    if (params.type) {
+                        setType(params.type);
+                        // Update UI to show correct type button
+                        document.querySelectorAll('.type-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.textContent.toLowerCase() === params.type) {
+                                btn.classList.add('active');
+                            }
+                        });
+                    }
+                    
+                    if (params.color !== undefined) {
+                        document.getElementById('startColorSlider').value = params.color;
+                        updateStartColor(params.color);
+                    }
+                    
+                    if (params.speed !== undefined) {
+                        document.getElementById('speedSlider').value = params.speed;
+                        updateSpeed(params.speed);
+                    }
+                    
+                    if (params.segments !== undefined) {
+                        document.getElementById('segmentsSlider').value = params.segments;
+                        updateSegments(params.segments);
+                    }
+                    
+                    if (params.amp !== undefined) {
+                        document.getElementById('ampSlider').value = params.amp;
+                        updateAmplitude(params.amp);
+                    }
+                    
+                    if (params.reverse !== undefined) {
+                        document.getElementById('reverseToggle').checked = params.reverse;
+                        updateReverse(params.reverse);
+                    }
+                    
+                    if (params.hyper !== undefined) {
+                        document.getElementById('hyperToggle').checked = params.hyper;
+                        toggleHyperMode(params.hyper);
+                    }
+                } catch (e) {
+                    console.error('Failed to load configuration:', e);
+                }
+            }
+        });
     </script>
 </body>
 </html>
