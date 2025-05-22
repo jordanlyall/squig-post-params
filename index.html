@@ -105,26 +105,6 @@
             transform: translateY(0);
         }
         
-        .reset-button {
-            background: rgba(255, 0, 128, 0.1);
-            border: 1px solid rgba(255, 0, 128, 0.3);
-            color: #FF0080;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        
-        .reset-button:hover {
-            background: rgba(255, 0, 128, 0.15);
-            border-color: #FF0080;
-            transform: translateY(-1px);
-        }
-        
         .parameter-flash {
             animation: parameterChange 0.4s ease;
         }
@@ -531,8 +511,6 @@
             
             <div class="section-header">Artist-Defined Parameters</div>
             
-            <button class="reset-button" onclick="resetToDefaults()">↻ Reset to Defaults</button>
-            
             <div class="control-group">
                 <label data-tooltip="Choose the visual appearance style of your squiggle">TRAITS</label>
                 <div class="type-selector">
@@ -732,35 +710,6 @@
 
         // PostParams Control Functions
         function setType(type) {
-            setTypeByName(type);
-        }
-
-        // Add flash effect to parameter updates
-
-        function updateAmplitude(value) {
-            amp = parseFloat(value);
-            document.getElementById('ampValue').textContent = value;
-            flashParameter(event.target.closest('.control-group'));
-        }
-
-        function resetToDefaults() {
-            // Reset all values to defaults
-            document.getElementById('startColorSlider').value = 128;
-            document.getElementById('speedSlider').value = 1;
-            document.getElementById('segmentsSlider').value = 16;
-            document.getElementById('ampSlider').value = 1;
-            
-            // Update JavaScript variables
-            updateStartColor(128);
-            updateSpeed(1);
-            updateSegments(16);
-            updateAmplitude(1);
-            
-            // Reset traits to normal
-            setTypeByName('normal');
-        }
-
-        function setTypeByName(type) {
             currentType = type;
             
             // Reset all type flags
@@ -794,10 +743,21 @@
             // Update UI
             document.querySelectorAll('.type-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent.toLowerCase() === type) {
-                    btn.classList.add('active');
-                }
             });
+            event.target.classList.add('active');
+        }
+
+        function flashParameter(element) {
+            element.classList.add('parameter-flash');
+            setTimeout(() => {
+                element.classList.remove('parameter-flash');
+            }, 400);
+        }
+
+        function updateAmplitude(value) {
+            amp = parseFloat(value);
+            document.getElementById('ampValue').textContent = value;
+            flashParameter(event.target.closest('.control-group'));
         }
 
         function flashParameter(element) {
