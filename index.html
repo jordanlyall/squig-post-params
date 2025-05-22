@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chromie Squiggle × PostParams Demo</title>
+    <title>PostParams Demo: Dynamic Evolution for Chromie Squiggles</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <style>
         * {
@@ -46,9 +46,10 @@
         h1 {
             font-size: 24px;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, #FF0080 0%, #FF00FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .subtitle {
@@ -132,7 +133,7 @@
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            background: #667eea;
+            background: #FF0080;
             cursor: pointer;
         }
         
@@ -140,7 +141,7 @@
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            background: #667eea;
+            background: #FF0080;
             cursor: pointer;
             border: none;
         }
@@ -148,7 +149,7 @@
         .value-display {
             display: inline-block;
             margin-left: 10px;
-            color: #667eea;
+            color: #FF0080;
             font-weight: bold;
         }
         
@@ -314,6 +315,16 @@
             padding: 0 !important;
         }
         
+        .section-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FF0080;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -331,27 +342,29 @@
     <div class="container">
         <div class="controls">
             <h1>Chromie Squiggle × PostParams</h1>
-            <div class="subtitle">PostParams Demo</div>
+            <div class="subtitle">Dynamic Evolution in Generative Art</div>
             
             <div class="info-box">
-                <strong>What if Chromie Squiggles had PostParams?</strong><br>
-                Explore how PostParams could transform the iconic genesis Art Blocks project. 
-                Adjust the controls below to see how collectors could personalize their Squiggle while preserving its essence.
+                <strong>What if Chromie Squiggles could evolve over time?</strong><br>
+                PostParams allows generative art to become a living conversation between artist, collector, and the blockchain. 
+                Explore how collectors could modify specific parameters within artist-defined boundaries, with all changes recorded on-chain as part of the artwork's ongoing provenance.
             </div>
             
             <a href="https://artblocks.io/postparams" target="_blank" class="cta-button">
-                Learn More About PostParams →
+                Explore PostParams for Your Art →
             </a>
             
             <div class="demo-note">
-                <strong>Demo Only:</strong> This is an interactive demonstration of PostParams capabilities. 
-                Actual Chromie Squiggles do not have PostParams functionality.
+                <strong>Interactive Demo:</strong> This demonstrates how PostParams enables dynamic evolution while preserving artistic intent. 
+                Real Chromie Squiggles remain immutable—this shows future possibilities.
             </div>
             
             <div class="divider"></div>
             
+            <div class="section-header">Artist-Defined Parameters</div>
+            
             <div class="control-group">
-                <label>Squiggle Type</label>
+                <label>Visual Style</label>
                 <div class="type-selector">
                     <button class="type-btn active" onclick="setType('normal')">Normal</button>
                     <button class="type-btn" onclick="setType('slinky')">Slinky</button>
@@ -399,10 +412,11 @@
             </div>
             
             <div class="instructions">
-                <strong>Instructions:</strong><br>
+                <strong>Try It:</strong><br>
+                • Modify parameters above to evolve the artwork<br>
                 • Click canvas to play/pause animation<br>
-                • Press SPACE to cycle backgrounds<br>
-                • With PostParams, these changes would be stored on-chain and reflected everywhere the NFT appears
+                • Press SPACE to cycle backgrounds<br><br>
+                With PostParams, these modifications would be stored on-chain, creating a permanent record of your artwork's evolution while keeping the core algorithm intact.
             </div>
         </div>
         
