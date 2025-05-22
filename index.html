@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chromie Squiggle × PMP Demo</title>
+    <title>Chromie Squiggle × PostParams Demo</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <style>
         * {
@@ -254,11 +254,11 @@
 <body>
     <div class="container">
         <div class="controls">
-            <h1>Chromie Squiggle × PMP</h1>
+            <h1>Chromie Squiggle × PostParams</h1>
             <div class="subtitle">Post-Mint Parameters Demo</div>
             
             <div class="info-box">
-                <strong>What if Chromie Squiggles had PMP?</strong><br>
+                <strong>What if Chromie Squiggles had PostParams?</strong><br>
                 Explore how Post-Mint Parameters could transform the iconic genesis Art Blocks project. 
                 Adjust the controls below to see how collectors could personalize their Squiggle while preserving its essence.
             </div>
@@ -319,7 +319,7 @@
                 <strong>Instructions:</strong><br>
                 • Click canvas to play/pause animation<br>
                 • Press SPACE to cycle backgrounds<br>
-                • With PMP, these changes would be stored on-chain and reflected everywhere the NFT appears
+                • With PostParams, these changes would be stored on-chain and reflected everywhere the NFT appears
             </div>
         </div>
         
@@ -329,7 +329,7 @@
     </div>
 
     <script>
-        // Modified Chromie Squiggle code with PMP parameters
+        // Modified Chromie Squiggle code with PostParams parameters
         let tokenData = {
             hashes: ["0x7d5c6e3f4a2b1c9e8d0f3a5b7c4e6d9a1b2c3f4e5d6a7b8c9d0e1f2a3b4c5d6"]
         };
@@ -353,7 +353,7 @@
         let ht;
         let wt = 2;
         
-        // PMP Parameters
+        // PostParams Parameters
         let speed = 1;
         let segments = 16;
         let amp = 1;
@@ -469,7 +469,7 @@
             return (((seed < 0) ? ~seed + 1 : seed) % 1000) / 1000;
         }
 
-        // PMP Control Functions
+        // PostParams Control Functions
         function setType(type) {
             currentType = type;
             
