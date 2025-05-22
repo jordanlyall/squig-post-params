@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chromie Squiggle × PMP Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .controls {
+            width: 400px;
+            background: #1a1a1a;
+            padding: 30px;
+            overflow-y: auto;
+            border-right: 1px solid #333;
+        }
+        
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        
+        .info-box {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            line-height: 1.6;
+            border: 1px solid #333;
+        }
+        
+        .info-box strong {
+            color: #667eea;
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #aaa;
+        }
+        
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .preset-btn {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+        
+        .preset-btn:hover {
+            background: #3a3a3a;
+            border-color: #667eea;
+        }
+        
+        .preset-btn.active {
+            background: #667eea;
+            border-color: #667eea;
+        }
+        
+        .type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .type-btn {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .type-btn:hover {
+            background: #3a3a3a;
+        }
+        
+        .type-btn.active {
+            background: #667eea;
+            border-color: #667eea;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            outline: none;
+            margin-top: 5px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .value-display {
+            display: inline-block;
+            margin-left: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .3s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #667eea;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .divider {
+            height: 1px;
+            background: #333;
+            margin: 30px 0;
+        }
+        
+        .instructions {
+            background: #1f1f1f;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #888;
+            margin-top: 20px;
+        }
+        
+        #canvas-wrapper {
+            background: #000;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .controls {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <h1>Chromie Squiggle × PMP</h1>
+            <div class="subtitle">Post-Mint Parameters Demo</div>
+            
+            <div class="info-box">
+                <strong>What if Chromie Squiggles had PMP?</strong><br>
+                Explore how Post-Mint Parameters could transform the iconic genesis Art Blocks project. 
+                Adjust the controls below to see how collectors could personalize their Squiggle while preserving its essence.
+            </div>
+            
+            <div class="control-group">
+                <label>Preset Moods</label>
+                <div class="preset-buttons">
+                    <button class="preset-btn active" onclick="setPreset('classic')">Classic</button>
+                    <button class="preset-btn" onclick="setPreset('zen')">Zen</button>
+                    <button class="preset-btn" onclick="setPreset('hyper')">Hyper</button>
+                    <button class="preset-btn" onclick="setPreset('custom')">Custom</button>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="control-group">
+                <label>Squiggle Type</label>
+                <div class="type-selector">
+                    <button class="type-btn active" onclick="setType('normal')">Normal</button>
+                    <button class="type-btn" onclick="setType('slinky')">Slinky</button>
+                    <button class="type-btn" onclick="setType('fuzzy')">Fuzzy</button>
+                    <button class="type-btn" onclick="setType('pipe')">Pipe</button>
+                    <button class="type-btn" onclick="setType('bold')">Bold</button>
+                    <button class="type-btn" onclick="setType('ribbed')">Ribbed</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label>Start Color <span class="value-display" id="colorValue">128</span></label>
+                <input type="range" id="startColorSlider" min="0" max="255" value="128" oninput="updateStartColor(this.value)">
+            </div>
+            
+            <div class="control-group">
+                <label>Animation Speed <span class="value-display" id="speedValue">1.0</span></label>
+                <input type="range" id="speedSlider" min="0.1" max="20" step="0.1" value="1" oninput="updateSpeed(this.value)">
+            </div>
+            
+            <div class="control-group">
+                <label>Segments <span class="value-display" id="segmentsValue">16</span></label>
+                <input type="range" id="segmentsSlider" min="12" max="20" value="16" oninput="updateSegments(this.value)">
+            </div>
+            
+            <div class="control-group">
+                <label>Amplitude <span class="value-display" id="ampValue">1.0</span></label>
+                <input type="range" id="ampSlider" min="0.5" max="2" step="0.1" value="1" oninput="updateAmplitude(this.value)">
+            </div>
+            
+            <div class="control-group">
+                <label>Reverse Colors</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="reverseToggle" onchange="updateReverse(this.checked)">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="instructions">
+                <strong>Instructions:</strong><br>
+                • Click canvas to play/pause animation<br>
+                • Press SPACE to cycle backgrounds<br>
+                • With PMP, these changes would be stored on-chain and reflected everywhere the NFT appears
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <div id="canvas-wrapper"></div>
+        </div>
+    </div>
+
+    <script>
+        // Modified Chromie Squiggle code with PMP parameters
+        let tokenData = {
+            hashes: ["0x7d5c6e3f4a2b1c9e8d0f3a5b7c4e6d9a1b2c3f4e5d6a7b8c9d0e1f2a3b4c5d6"]
+        };
+        
+        let numHashes = tokenData.hashes.length;
+        let hashPairs = [];
+        for (let i = 0; i < numHashes; i++) {
+            for (let j = 0; j < 32; j++) {
+                hashPairs.push(tokenData.hashes[i].slice(2 + (j * 2), 4 + (j * 2)));
+            }
+        }
+        let decPairs = hashPairs.map(x => {
+            return parseInt(x, 16);
+        });
+
+        let seed = parseInt(tokenData.hashes[0].slice(0, 16), 16);
+        let color;
+        let backgroundIndex = 0;
+        let backgroundArray = [255, 225, 200, 175, 150, 125, 100, 75, 50, 25, 0, 25, 50, 75, 100, 125, 150, 175, 200, 225];
+        let index = 0;
+        let ht;
+        let wt = 2;
+        
+        // PMP Parameters
+        let speed = 1;
+        let segments = 16;
+        let amp = 1;
+        let startColor = 128;
+        let reverse = false;
+        let currentType = 'normal';
+        
+        // Type parameters
+        let slinky = false;
+        let pipe = false;
+        let bold = false;
+        let segmented = false;
+        let fuzzy = false;
+        
+        let direction = 1;
+        let loops = true;
+
+        function setup() {
+            let canvas = createCanvas(800, 600);
+            canvas.parent('canvas-wrapper');
+            colorMode(HSB, 255);
+            ht = 3.5;
+            spread = 25;
+            strokeWeight(height/1200);
+        }
+
+        function draw() {
+            color = 0;
+            background(backgroundArray[backgroundIndex]);
+            let div = 10;
+            let steps = slinky ? 50 : fuzzy ? 1000 : 200;
+            
+            push();
+            translate((width / 2) - (width / wt / 2), height / 2);
+            
+            for (let j = 0; j < segments - 2; j++) {
+                for (let i = 0; i <= steps; i++) {
+                    let t = i / steps;
+                    let x = curvePoint(width / segments / wt * j, width / segments / wt * (j + 1), width / segments / wt * (j + 2), width / segments / wt * (j + 3), t);
+                    let y = curvePoint(map(decPairs[j], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 1], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 2], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 3], 0, 255, -height / ht, height / ht) * amp, t);
+                    let hue = reverse ? 255 - (((color / spread) + startColor + index) % 255) : (((color / spread) + startColor) + index) % 255;
+
+                    if (fuzzy) {
+                        noStroke();
+                        fill(hue, 255, 255, 20);
+                        let fuzzX = x + map(rnd(), 0, 1, 0, height / 10);
+                        let fuzzY = y + map(rnd(), 0, 1, 0, height / 10);
+                        if (dist(x, y, fuzzX, fuzzY) < height / 11.5) {
+                            circle(fuzzX, fuzzY, map(rnd(), 0, 1, height / 160, height / 16));
+                        }
+                    } else {
+                        if (slinky && pipe) {
+                            if (i == 0 || i == steps - 1) {
+                                fill(0);
+                            } else {
+                                noFill();
+                            }
+                            stroke(0);
+                            circle(x, y, (height / 7))
+                        }
+
+                        if (slinky) {
+                            if (i == 0 || i == steps - 1) {
+                                fill(hue, 255, 255);
+                            } else {
+                                noFill();
+                            }
+                            stroke(hue, 255, 255);
+                        } else {
+                            noStroke();
+                            fill(hue, 255, 255);
+                        }
+
+                        circle(x, y, bold && !slinky ? height / 5 : height / 13);
+
+                        if (segmented && !slinky && !bold) {
+                            if (i % div === 0 || i == 0 || i == steps - 1) {
+                                noStroke();
+                                fill(decPairs[25]);
+                                circle(x, y, height / 12);
+                            }
+                        }
+                    }
+                    color++;
+                }
+                seed = parseInt(tokenData.hashes[0].slice(0, 16), 16);
+            }
+            pop();
+
+            loops === true ? index = index + speed : index = index;
+        }
+
+        function keyPressed() {
+            if (keyCode === 32) {
+                if (backgroundIndex < backgroundArray.length - 1) {
+                    backgroundIndex++;
+                } else {
+                    backgroundIndex = 0;
+                }
+            }
+        }
+
+        function mouseClicked() {
+            if (mouseX > 400) { // Only toggle if clicking on canvas area
+                loops = !loops;
+            }
+        }
+
+        function rnd() {
+            seed ^= seed << 13;
+            seed ^= seed >> 17;
+            seed ^= seed << 5;
+            return (((seed < 0) ? ~seed + 1 : seed) % 1000) / 1000;
+        }
+
+        // PMP Control Functions
+        function setType(type) {
+            currentType = type;
+            
+            // Reset all type flags
+            slinky = false;
+            pipe = false;
+            bold = false;
+            segmented = false;
+            fuzzy = false;
+            
+            // Set flags based on type
+            switch(type) {
+                case 'slinky':
+                    slinky = true;
+                    break;
+                case 'fuzzy':
+                    pipe = true;
+                    fuzzy = true;
+                    break;
+                case 'pipe':
+                    pipe = true;
+                    slinky = true;
+                    break;
+                case 'bold':
+                    bold = true;
+                    break;
+                case 'ribbed':
+                    segmented = true;
+                    break;
+            }
+            
+            // Update UI
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function updateStartColor(value) {
+            startColor = parseInt(value);
+            document.getElementById('colorValue').textContent = value;
+        }
+
+        function updateSpeed(value) {
+            speed = parseFloat(value);
+            document.getElementById('speedValue').textContent = value;
+        }
+
+        function updateSegments(value) {
+            segments = parseInt(value);
+            document.getElementById('segmentsValue').textContent = value;
+        }
+
+        function updateAmplitude(value) {
+            amp = parseFloat(value);
+            document.getElementById('ampValue').textContent = value;
+        }
+
+        function updateReverse(checked) {
+            reverse = checked;
+        }
+
+        function setPreset(preset) {
+            // Update UI
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            switch(preset) {
+                case 'zen':
+                    document.getElementById('speedSlider').value = 0.5;
+                    document.getElementById('segmentsSlider').value = 14;
+                    document.getElementById('ampSlider').value = 0.7;
+                    updateSpeed(0.5);
+                    updateSegments(14);
+                    updateAmplitude(0.7);
+                    break;
+                case 'hyper':
+                    document.getElementById('speedSlider').value = 10;
+                    document.getElementById('segmentsSlider').value = 20;
+                    document.getElementById('ampSlider').value = 1.5;
+                    updateSpeed(10);
+                    updateSegments(20);
+                    updateAmplitude(1.5);
+                    break;
+                case 'classic':
+                    document.getElementById('speedSlider').value = 1;
+                    document.getElementById('segmentsSlider').value = 16;
+                    document.getElementById('ampSlider').value = 1;
+                    document.getElementById('startColorSlider').value = 128;
+                    document.getElementById('reverseToggle').checked = false;
+                    updateSpeed(1);
+                    updateSegments(16);
+                    updateAmplitude(1);
+                    updateStartColor(128);
+                    updateReverse(false);
+                    setType('normal');
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
