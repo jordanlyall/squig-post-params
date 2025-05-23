@@ -684,6 +684,10 @@
             let drawWidth = width / wt;
             let drawHeight = height / ht;
             
+            // Move down based on amplitude to prevent top clipping
+            let ampOffset = (amp - 1) * drawHeight * 0.25;
+            translate(0, ampOffset);
+            
             // Additional mobile adjustments
             if (windowWidth <= 480) {
                 translate(0, -drawHeight * 0.1); // Shift up slightly on mobile
