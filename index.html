@@ -470,7 +470,7 @@
                 padding: 15px;
             }
             #canvas-wrapper {
-                height: 280px;
+                height: 400px;
                 width: calc(100vw - 30px);
                 max-width: none;
             }
@@ -499,7 +499,7 @@
                 padding: 12px;
             }
             #canvas-wrapper {
-                height: 250px;
+                height: 350px;
             }
         }
     </style>
@@ -588,7 +588,7 @@
         let backgroundArray = [255, 250, 245, 240, 235, 230, 225, 220, 215, 210, 205, 200, 195, 190, 185, 180, 175, 170, 165, 160];
         let index = 0;
         let ht;
-        let wt = 1.3;
+        let wt;
         
         // PostParams Parameters
         let segments = 16;
@@ -604,16 +604,64 @@
         
         let direction = 1;
         let loops = true;
+        
+        // Track canvas dimensions
+        let canvasWidth, canvasHeight;
+        let scaleFactor = 1;
 
         function setup() {
-            let canvas = createCanvas(800, 600);
+            // Get the wrapper dimensions
+            let wrapper = document.getElementById('canvas-wrapper');
+            let wrapperRect = wrapper.getBoundingClientRect();
+            
+            // Calculate canvas size to fit within wrapper
+            canvasWidth = wrapperRect.width;
+            canvasHeight = wrapperRect.height;
+            
+            let canvas = createCanvas(canvasWidth, canvasHeight);
             canvas.parent('canvas-wrapper');
             colorMode(HSB, 255);
-            ht = 4.0;
-            spread = 25;
+            
+            // Adjust scaling factors based on canvas size
+            updateScalingFactors();
+            
             strokeWeight(height/1200);
-            // Ensure initial background is white
             background(255);
+        }
+        
+        function updateScalingFactors() {
+            // Base scaling on smaller dimension for mobile
+            let baseDimension = min(width, height);
+            
+            // Adjust scaling factors
+            if (windowWidth <= 480) {
+                wt = 1.8; // Wider width factor for mobile
+                ht = 5.5; // Taller height factor
+                scaleFactor = baseDimension / 350;
+            } else if (windowWidth <= 768) {
+                wt = 1.5;
+                ht = 4.5;
+                scaleFactor = baseDimension / 400;
+            } else {
+                wt = 1.3;
+                ht = 4.0;
+                scaleFactor = baseDimension / 600;
+            }
+        }
+        
+        function windowResized() {
+            // Get the wrapper dimensions
+            let wrapper = document.getElementById('canvas-wrapper');
+            let wrapperRect = wrapper.getBoundingClientRect();
+            
+            // Resize canvas to fit
+            canvasWidth = wrapperRect.width;
+            canvasHeight = wrapperRect.height;
+            
+            resizeCanvas(canvasWidth, canvasHeight);
+            
+            // Update scaling factors
+            updateScalingFactors();
         }
 
         function draw() {
@@ -624,28 +672,60 @@
             let bgValue = backgroundArray[backgroundIndex];
             background(bgValue, bgValue, bgValue);
             pop();
+            
             let div = 10;
             let steps = slinky ? 50 : fuzzy ? 1000 : 200;
             
             push();
-            // Adjust positioning based on screen size
-            let yOffset = windowWidth <= 768 ? 0 : 30;
-            translate((width / 2) - (width / wt / 2), height / 2 + yOffset);
+            // Center the drawing
+            translate(width / 2, height / 2);
+            
+            // Calculate drawing bounds
+            let drawWidth = width / wt;
+            let drawHeight = height / ht;
+            
+            // Additional mobile adjustments
+            if (windowWidth <= 480) {
+                translate(0, -drawHeight * 0.1); // Shift up slightly on mobile
+            }
+            
+            // Start drawing from left edge
+            translate(-drawWidth / 2, 0);
             
             for (let j = 0; j < segments - 2; j++) {
                 for (let i = 0; i <= steps; i++) {
                     let t = i / steps;
-                    let x = curvePoint(width / segments / wt * j, width / segments / wt * (j + 1), width / segments / wt * (j + 2), width / segments / wt * (j + 3), t);
-                    let y = curvePoint(map(decPairs[j], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 1], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 2], 0, 255, -height / ht, height / ht) * amp, map(decPairs[j + 3], 0, 255, -height / ht, height / ht) * amp, t);
-                    let hue = ((color / spread) + index) % 255;
+                    let x = curvePoint(
+                        drawWidth / segments * j, 
+                        drawWidth / segments * (j + 1), 
+                        drawWidth / segments * (j + 2), 
+                        drawWidth / segments * (j + 3), 
+                        t
+                    );
+                    let y = curvePoint(
+                        map(decPairs[j], 0, 255, -drawHeight, drawHeight) * amp, 
+                        map(decPairs[j + 1], 0, 255, -drawHeight, drawHeight) * amp, 
+                        map(decPairs[j + 2], 0, 255, -drawHeight, drawHeight) * amp, 
+                        map(decPairs[j + 3], 0, 255, -drawHeight, drawHeight) * amp, 
+                        t
+                    );
+                    
+                    let hue = ((color / 25) + index) % 255;
+                    
+                    // Scale circle sizes based on canvas size
+                    let baseCircleSize = height / 13 * scaleFactor;
+                    let boldCircleSize = height / 5 * scaleFactor;
+                    let fuzzCircleSize = height / 10 * scaleFactor;
+                    let segmentCircleSize = height / 12 * scaleFactor;
+                    let pipeCircleSize = height / 7 * scaleFactor;
 
                     if (fuzzy) {
                         noStroke();
                         fill(hue, 255, 255, 20);
-                        let fuzzX = x + map(rnd(), 0, 1, 0, height / 10);
-                        let fuzzY = y + map(rnd(), 0, 1, 0, height / 10);
-                        if (dist(x, y, fuzzX, fuzzY) < height / 11.5) {
-                            circle(fuzzX, fuzzY, map(rnd(), 0, 1, height / 160, height / 16));
+                        let fuzzX = x + map(rnd(), 0, 1, 0, fuzzCircleSize);
+                        let fuzzY = y + map(rnd(), 0, 1, 0, fuzzCircleSize);
+                        if (dist(x, y, fuzzX, fuzzY) < fuzzCircleSize * 1.15) {
+                            circle(fuzzX, fuzzY, map(rnd(), 0, 1, height / 160 * scaleFactor, height / 16 * scaleFactor));
                         }
                     } else {
                         if (slinky && pipe) {
@@ -655,7 +735,7 @@
                                 noFill();
                             }
                             stroke(0);
-                            circle(x, y, (height / 7))
+                            circle(x, y, pipeCircleSize);
                         }
 
                         if (slinky) {
@@ -670,13 +750,13 @@
                             fill(hue, 255, 255);
                         }
 
-                        circle(x, y, bold && !slinky ? height / 5 : height / 13);
+                        circle(x, y, bold && !slinky ? boldCircleSize : baseCircleSize);
 
                         if (segmented && !slinky && !bold) {
                             if (i % div === 0 || i == 0 || i == steps - 1) {
                                 noStroke();
                                 fill(decPairs[25]);
-                                circle(x, y, height / 12);
+                                circle(x, y, segmentCircleSize);
                             }
                         }
                     }
@@ -700,7 +780,10 @@
         }
 
         function mouseClicked() {
-            if (mouseX > 400) { // Only toggle if clicking on canvas area
+            // Check if click is on canvas
+            let wrapper = document.getElementById('canvas-wrapper');
+            let rect = wrapper.getBoundingClientRect();
+            if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
                 loops = !loops;
             }
         }
@@ -764,11 +847,10 @@
             flashParameter(event.target.closest('.control-group'));
         }
 
-        function flashParameter(element) {
-            element.classList.add('parameter-flash');
-            setTimeout(() => {
-                element.classList.remove('parameter-flash');
-            }, 400);
+        function updateSegments(value) {
+            segments = parseInt(value);
+            document.getElementById('segmentsValue').textContent = value;
+            flashParameter(document.getElementById('segmentsSlider').closest('.control-group'));
         }
 
         // Tooltip functionality
@@ -811,13 +893,6 @@
                 });
             });
         });
-
-        // Add flash effect to parameter updates
-        function updateSegments(value) {
-            segments = parseInt(value);
-            document.getElementById('segmentsValue').textContent = value;
-            flashParameter(document.getElementById('segmentsSlider').closest('.control-group'));
-        }
     </script>
 </body>
 </html>
