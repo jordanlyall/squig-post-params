@@ -675,19 +675,19 @@
             // Base scaling on smaller dimension for mobile
             let baseDimension = min(width, height);
             
-            // Adjust scaling factors
+            // More conservative scaling factors with padding
             if (windowWidth <= 480) {
-                wt = 1.8; // Wider width factor for mobile
-                ht = 5.5; // Taller height factor
-                scaleFactor = baseDimension / 350;
-            } else if (windowWidth <= 768) {
-                wt = 1.5;
-                ht = 4.5;
+                wt = 2.2; // More conservative for mobile
+                ht = 6.5; 
                 scaleFactor = baseDimension / 400;
+            } else if (windowWidth <= 768) {
+                wt = 1.8;
+                ht = 5.5;
+                scaleFactor = baseDimension / 450;
             } else {
-                wt = 1.3;
-                ht = 4.0;
-                scaleFactor = baseDimension / 600;
+                wt = 1.6; // More conservative for desktop
+                ht = 5.0;
+                scaleFactor = baseDimension / 650;
             }
         }
         
@@ -722,18 +722,18 @@
             // Center the drawing
             translate(width / 2, height / 2);
             
-            // Calculate drawing bounds
-            let drawWidth = width / wt;
-            let drawHeight = height / ht;
+            // Calculate drawing bounds with padding
+            let padding = min(width, height) * 0.05; // 5% padding
+            let drawWidth = (width - padding * 2) / wt;
+            let drawHeight = (height - padding * 2) / ht;
             
-            // Move down based on amplitude to prevent top clipping
-            let ampOffset = (amp - 1) * drawHeight * 0.25;
+            // More conservative amplitude offset to prevent clipping
+            let maxAmpOffset = drawHeight * 0.15; // Reduced from 0.25
+            let ampOffset = (amp - 1) * maxAmpOffset;
+            
+            // Ensure we don't go beyond bounds
+            ampOffset = constrain(ampOffset, -drawHeight * 0.2, drawHeight * 0.2);
             translate(0, ampOffset);
-            
-            // Additional mobile adjustments
-            if (windowWidth <= 480) {
-                translate(0, -drawHeight * 0.1); // Shift up slightly on mobile
-            }
             
             // Start drawing from left edge
             translate(-drawWidth / 2, 0);
@@ -756,14 +756,17 @@
                         t
                     );
                     
+                    // Constrain y to ensure it stays within bounds
+                    y = constrain(y, -height/2 + padding, height/2 - padding);
+                    
                     let hue = ((color / 25) + index) % 255;
                     
-                    // Scale circle sizes based on canvas size
-                    let baseCircleSize = height / 13 * scaleFactor;
-                    let boldCircleSize = height / 5 * scaleFactor;
-                    let fuzzCircleSize = height / 10 * scaleFactor;
-                    let segmentCircleSize = height / 12 * scaleFactor;
-                    let pipeCircleSize = height / 7 * scaleFactor;
+                    // Scale circle sizes based on canvas size (more conservative)
+                    let baseCircleSize = height / 15 * scaleFactor;
+                    let boldCircleSize = height / 6 * scaleFactor;
+                    let fuzzCircleSize = height / 12 * scaleFactor;
+                    let segmentCircleSize = height / 14 * scaleFactor;
+                    let pipeCircleSize = height / 8 * scaleFactor;
 
                     if (fuzzy) {
                         noStroke();
@@ -771,7 +774,7 @@
                         let fuzzX = x + map(rnd(), 0, 1, 0, fuzzCircleSize);
                         let fuzzY = y + map(rnd(), 0, 1, 0, fuzzCircleSize);
                         if (dist(x, y, fuzzX, fuzzY) < fuzzCircleSize * 1.15) {
-                            circle(fuzzX, fuzzY, map(rnd(), 0, 1, height / 160 * scaleFactor, height / 16 * scaleFactor));
+                            circle(fuzzX, fuzzY, map(rnd(), 0, 1, height / 180 * scaleFactor, height / 18 * scaleFactor));
                         }
                     } else {
                         if (slinky && pipe) {
