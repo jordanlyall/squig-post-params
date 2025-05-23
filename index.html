@@ -73,77 +73,6 @@
             color: #FF0080;
         }
         
-        .token-selector {
-            margin-bottom: 25px;
-            padding: 15px;
-            background: rgba(255, 0, 128, 0.02);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 0, 128, 0.1);
-        }
-        
-        .token-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .token-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #e5e5e5;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-        
-        .token-input:focus {
-            outline: none;
-            border-color: #FF0080;
-            box-shadow: 0 0 0 2px rgba(255, 0, 128, 0.1);
-        }
-        
-        .load-button {
-            padding: 10px 20px;
-            background: #FF0080;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .load-button:hover:not(:disabled) {
-            background: #e6006e;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(255, 0, 128, 0.2);
-        }
-        
-        .load-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        .token-info {
-            font-size: 12px;
-            color: #6c757d;
-            margin-top: 8px;
-        }
-        
-        .actual-features {
-            background: rgba(255, 0, 128, 0.05);
-            border: 1px solid rgba(255, 0, 128, 0.1);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .actual-features strong {
-            color: #FF0080;
-        }
-        
         .control-group {
             margin-bottom: 25px;
             padding: 15px;
@@ -480,28 +409,6 @@
             100% { transform: scale(1.4); opacity: 0; }
         }
         
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #FF0080;
-            z-index: 100;
-            border-radius: 12px;
-        }
-        
-        .error-message {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-        
         main {
             margin: 0;
             padding: 0;
@@ -612,29 +519,14 @@
                 Learn more about PostParams →
             </a>
             
-            <div class="token-selector">
-                <label>Load Real Chromie Squiggle</label>
-                <div class="token-input-group">
-                    <input type="number" id="tokenId" class="token-input" placeholder="Token ID" value="7515" min="0" max="8887">
-                    <button class="load-button" onclick="loadSquiggle()">Load</button>
-                </div>
-                <div class="token-info">Enter a token ID (0-8887) to load a real Chromie Squiggle</div>
-                <div id="errorMessage" class="error-message"></div>
-            </div>
-            
-            <div id="actualFeatures" class="actual-features" style="display: none;">
-                <strong>Actual Token Features:</strong><br>
-                <span id="featuresList"></span>
-            </div>
-            
             <div class="demo-note">
-                <strong>Interactive Demo:</strong> This demonstrates how PostParams could transform existing NFTs into living experiences. 
+                <strong>Interactive Demo:</strong> Experience how PostParams transforms art into living, breathing experiences. 
                 Real Chromie Squiggles remain immutable—this showcases the future of interactive on-chain art.
             </div>
             
             <div class="divider"></div>
             
-            <div class="section-header">If This Were PostParams-Enabled</div>
+            <div class="section-header">Artist-Defined Parameters</div>
             
             <div class="control-group">
                 <label data-tooltip="Choose the visual appearance style of your squiggle">TRAITS</label>
@@ -659,18 +551,16 @@
             </div>
             
             <div class="instructions">
-                <strong>Try It:</strong> Load different Chromie Squiggles and imagine how PostParams could let collectors evolve them over time.<br><br>
+                <strong>Try It:</strong> Modify the parameters above to evolve the living artwork and see how it transforms in real-time.<br><br>
                 With PostParams, art becomes a persistent on-chain experience—every interaction shapes its evolution while preserving the artist's original vision.
             </div>
         </div>
         
         <div class="canvas-container">
-            <div id="canvas-wrapper">
-                <div id="loadingOverlay" class="loading-overlay" style="display: none;">Loading...</div>
-            </div>
+            <div id="canvas-wrapper"></div>
             <div class="live-indicator">
                 <div class="live-dot"></div>
-                <span id="tokenDisplay">Token #7515</span>
+                Live Preview
             </div>
         </div>
     </div>
@@ -678,29 +568,19 @@
     <script>
         // Modified Chromie Squiggle code with PostParams parameters
         let tokenData = {
-            hashes: ["0xb9aac298f61d2489cb6ee2a33060498aae0ec0f6deb973f34f2218521cca0ae6"] // Default to token 7515
+            hashes: ["0x7d5c6e3f4a2b1c9e8d0f3a5b7c4e6d9a1b2c3f4e5d6a7b8c9d0e1f2a3b4c5d6"]
         };
-        
-        let currentTokenId = 7515;
-        let tokenFeatures = {};
         
         let numHashes = tokenData.hashes.length;
         let hashPairs = [];
-        let decPairs = [];
-        
-        function processHash() {
-            hashPairs = [];
-            for (let i = 0; i < numHashes; i++) {
-                for (let j = 0; j < 32; j++) {
-                    hashPairs.push(tokenData.hashes[i].slice(2 + (j * 2), 4 + (j * 2)));
-                }
+        for (let i = 0; i < numHashes; i++) {
+            for (let j = 0; j < 32; j++) {
+                hashPairs.push(tokenData.hashes[i].slice(2 + (j * 2), 4 + (j * 2)));
             }
-            decPairs = hashPairs.map(x => {
-                return parseInt(x, 16);
-            });
         }
-        
-        processHash();
+        let decPairs = hashPairs.map(x => {
+            return parseInt(x, 16);
+        });
 
         let seed = parseInt(tokenData.hashes[0].slice(0, 16), 16);
         let color;
@@ -728,9 +608,6 @@
         // Track canvas dimensions
         let canvasWidth, canvasHeight;
         let scaleFactor = 1;
-        
-        // P5.js instance
-        let p5Instance = null;
 
         function setup() {
             // Get the wrapper dimensions
@@ -921,99 +798,6 @@
             seed ^= seed << 5;
             return (((seed < 0) ? ~seed + 1 : seed) % 1000) / 1000;
         }
-        
-        // Load squiggle from API
-        async function loadSquiggle() {
-            const tokenId = document.getElementById('tokenId').value;
-            const button = document.querySelector('.load-button');
-            const errorDiv = document.getElementById('errorMessage');
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            
-            if (!tokenId || tokenId < 0 || tokenId > 8887) {
-                errorDiv.textContent = 'Please enter a valid token ID (0-8887)';
-                return;
-            }
-            
-            button.disabled = true;
-            button.textContent = 'Loading...';
-            errorDiv.textContent = '';
-            loadingOverlay.style.display = 'flex';
-            
-            try {
-                // Check if we're in production (Railway) or local development
-                let response;
-                
-                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                    // Local development - use CORS proxy
-                    const proxyUrl = 'https://corsproxy.io/?';
-                    const apiUrl = `https://token.artblocks.io/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/${tokenId}`;
-                    const fullUrl = proxyUrl + encodeURIComponent(apiUrl);
-                    console.log('Local dev - fetching via CORS proxy:', fullUrl);
-                    response = await fetch(fullUrl);
-                } else {
-                    // Production - use our server endpoint
-                    const endpoint = `/api/token/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/${tokenId}`;
-                    console.log('Production - fetching via server:', endpoint);
-                    response = await fetch(endpoint);
-                }
-                
-                if (!response.ok) {
-                    throw new Error(`Token not found (status: ${response.status})`);
-                }
-                
-                const data = await response.json();
-                console.log('Token data:', data);
-                console.log('Token hash:', data.token_hash);
-                
-                if (!data.token_hash) {
-                    throw new Error('No token hash found in response');
-                }
-                
-                // Update token data
-                tokenData.hashes = [data.token_hash];
-                currentTokenId = tokenId;
-                processHash();
-                
-                // Reset seed and index for animation
-                seed = parseInt(tokenData.hashes[0].slice(0, 16), 16);
-                index = 0;
-                
-                // Store and display features
-                tokenFeatures = data.features || {};
-                displayFeatures();
-                
-                // Update display
-                document.getElementById('tokenDisplay').textContent = `Token #${tokenId}`;
-                
-                // Clear canvas and restart
-                clear();
-                background(255);
-                
-            } catch (error) {
-                console.error('Full error:', error);
-                errorDiv.innerHTML = `Error: ${error.message}<br>
-                ${window.location.hostname === 'localhost' ? 'CORS proxy may be down. Try deploying to production.' : 'Please try again.'}`;
-            } finally {
-                button.disabled = false;
-                button.textContent = 'Load';
-                loadingOverlay.style.display = 'none';
-            }
-        }
-        
-        function displayFeatures() {
-            const featuresDiv = document.getElementById('actualFeatures');
-            const featuresList = document.getElementById('featuresList');
-            
-            if (Object.keys(tokenFeatures).length > 0) {
-                featuresDiv.style.display = 'block';
-                const featuresHtml = Object.entries(tokenFeatures)
-                    .map(([key, value]) => `${key}: ${value}`)
-                    .join(' • ');
-                featuresList.innerHTML = featuresHtml;
-            } else {
-                featuresDiv.style.display = 'none';
-            }
-        }
 
         // PostParams Control Functions
         function setType(type) {
@@ -1112,9 +896,6 @@
                     }
                 });
             });
-            
-            // Don't auto-load due to CORS - let user manually load
-            // loadSquiggle();
         });
     </script>
 </body>
