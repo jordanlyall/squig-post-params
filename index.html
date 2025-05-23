@@ -611,7 +611,7 @@
             let steps = slinky ? 50 : fuzzy ? 1000 : 200;
             
             push();
-            translate((width / 2) - (width / wt / 2), height / 2);
+            translate((width / 2) - (width / wt / 2), height / 2 + 30);
             
             for (let j = 0; j < segments - 2; j++) {
                 for (let i = 0; i <= steps; i++) {
