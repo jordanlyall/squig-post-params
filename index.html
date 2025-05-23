@@ -62,7 +62,7 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 13px;
             line-height: 1.6;
             border: 1px solid #e5e5e5;
@@ -71,6 +71,23 @@
         
         .info-box strong {
             color: #FF0080;
+        }
+        
+        .learn-more-link {
+            display: inline-flex;
+            align-items: center;
+            color: #FF0080;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .learn-more-link:hover {
+            border-bottom-color: #FF0080;
+            transform: translateX(2px);
         }
         
         .control-group {
@@ -313,26 +330,6 @@
             color: #FF0080;
         }
         
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(90deg, #FF0080 0%, #E91E63 100%);
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 25px;
-            transition: all 0.3s;
-            text-align: center;
-            width: 100%;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 0, 128, 0.4);
-        }
-        
         #canvas-wrapper {
             background: #ffffff;
             border-radius: 12px;
@@ -513,14 +510,13 @@
             <div class="info-box">
                 <strong>What if art could live and evolve on the blockchain?</strong><br>
                 PostParams transforms static NFTs into persistent on-chain experiences. Artists define interactive boundaries while collectors shape the artwork's evolution—every change becomes part of its living story, stored permanently on-chain.
+                <div style="margin-top: 10px;">
+                    <a href="https://artblocks.io/postparams" target="_blank" class="learn-more-link">Learn more about PostParams →</a>
+                </div>
             </div>
             
-            <a href="https://artblocks.io/postparams" target="_blank" class="cta-button">
-                Learn more about PostParams →
-            </a>
-            
             <div class="demo-note">
-                <strong>Interactive Demo:</strong> Experience how PostParams transforms art into living, breathing experiences. 
+                <strong>Interactive Demo:</strong> Experience how PostParams could transform these static outputs into living, breathing experiences. 
                 Real Chromie Squiggles remain immutable—this showcases the future of interactive on-chain art.
             </div>
             
@@ -560,27 +556,43 @@
             <div id="canvas-wrapper"></div>
             <div class="live-indicator">
                 <div class="live-dot"></div>
-                Live Preview
+                Demo Preview
             </div>
         </div>
     </div>
 
     <script>
+        // Generate a random hash for variety
+        function generateRandomHash() {
+            let hash = '0x';
+            for (let i = 0; i < 64; i++) {
+                hash += Math.floor(Math.random() * 16).toString(16);
+            }
+            return hash;
+        }
+        
         // Modified Chromie Squiggle code with PostParams parameters
         let tokenData = {
-            hashes: ["0x7d5c6e3f4a2b1c9e8d0f3a5b7c4e6d9a1b2c3f4e5d6a7b8c9d0e1f2a3b4c5d6"]
+            hashes: [generateRandomHash()]
         };
         
         let numHashes = tokenData.hashes.length;
         let hashPairs = [];
-        for (let i = 0; i < numHashes; i++) {
-            for (let j = 0; j < 32; j++) {
-                hashPairs.push(tokenData.hashes[i].slice(2 + (j * 2), 4 + (j * 2)));
+        let decPairs = [];
+        
+        function processHash() {
+            hashPairs = [];
+            for (let i = 0; i < numHashes; i++) {
+                for (let j = 0; j < 32; j++) {
+                    hashPairs.push(tokenData.hashes[i].slice(2 + (j * 2), 4 + (j * 2)));
+                }
             }
+            decPairs = hashPairs.map(x => {
+                return parseInt(x, 16);
+            });
         }
-        let decPairs = hashPairs.map(x => {
-            return parseInt(x, 16);
-        });
+        
+        processHash();
 
         let seed = parseInt(tokenData.hashes[0].slice(0, 16), 16);
         let color;
