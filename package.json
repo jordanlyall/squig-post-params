@@ -2,6 +2,9 @@
   "name": "squiggle-postparams-demo",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx serve -s . -l 8080"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
