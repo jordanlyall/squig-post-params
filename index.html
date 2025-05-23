@@ -13,9 +13,10 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            color: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
             overflow-x: hidden;
         }
         
@@ -25,12 +26,12 @@
         }
         
         .controls {
-            width: 400px;
+            width: 420px;
             background: #ffffff;
-            padding: 30px;
+            padding: 32px;
             overflow-y: auto;
-            border-right: 1px solid #e5e5e5;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            border-right: 1px solid #e5e7eb;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.08);
         }
         
         .canvas-container {
@@ -38,39 +39,58 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #fafafa;
+            background: #f8f9fa;
             position: relative;
             padding: 40px;
         }
         
         h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #FF0080 0%, #FF00FF 100%);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #FF0080 0%, #FF00FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
         
         .subtitle {
-            font-size: 14px;
-            color: #6c757d;
-            margin-bottom: 30px;
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 24px;
+            font-weight: 500;
         }
         
         .info-box {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            line-height: 1.6;
-            border: 1px solid #e5e5e5;
-            color: #495057;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 15px;
+            line-height: 1.7;
+            border: 1px solid #e2e8f0;
+            color: #374151;
+            position: relative;
+        }
+        
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #FF0080 0%, #FF00FF 100%);
+            border-radius: 12px 12px 0 0;
         }
         
         .info-box strong {
-            color: #FF0080;
+            color: #1f2937;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
         
         .learn-more-link {
@@ -80,35 +100,42 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.2s ease;
-            font-size: 13px;
-            padding: 4px 0;
-            border-bottom: 1px solid transparent;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 0, 128, 0.05);
+            border: 1px solid rgba(255, 0, 128, 0.1);
+            margin-top: 12px;
         }
         
         .learn-more-link:hover {
-            border-bottom-color: #FF0080;
+            background: rgba(255, 0, 128, 0.1);
             transform: translateX(2px);
+            border-color: rgba(255, 0, 128, 0.2);
         }
         
         .control-group {
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 8px;
+            margin-bottom: 28px;
+            padding: 20px;
+            border-radius: 12px;
             transition: all 0.2s ease;
             position: relative;
+            border: 1px solid #f3f4f6;
         }
         
         .control-group:hover {
             background: rgba(255, 0, 128, 0.02);
+            border-color: rgba(255, 0, 128, 0.1);
         }
         
         .tooltip {
             position: absolute;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(17, 24, 39, 0.95);
             color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.4;
             white-space: nowrap;
             z-index: 1000;
             opacity: 0;
@@ -134,206 +161,162 @@
         
         label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
+            margin-bottom: 12px;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #495057;
-            font-weight: 500;
+            letter-spacing: 0.8px;
+            color: #374151;
+            font-weight: 600;
         }
         
         .type-selector {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
         }
         
         .type-btn {
-            background: #f8f9fa;
-            border: 1px solid #e5e5e5;
-            color: #495057;
-            padding: 12px 10px;
-            border-radius: 6px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            color: #374151;
+            padding: 14px 12px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-size: 12px;
+            font-size: 13px;
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
             position: relative;
             overflow: hidden;
         }
         
         .type-btn:hover {
-            background: #e9ecef;
+            background: #f3f4f6;
             border-color: #FF0080;
             transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(255, 0, 128, 0.15);
+            box-shadow: 0 4px 12px rgba(255, 0, 128, 0.15);
         }
         
         .type-btn.active {
             background: #FF0080;
             border-color: #FF0080;
             color: white;
-            box-shadow: 0 4px 12px rgba(255, 0, 128, 0.25);
+            box-shadow: 0 4px 16px rgba(255, 0, 128, 0.3);
+            font-weight: 700;
         }
         
         input[type="range"] {
             width: 100%;
             -webkit-appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: #e5e5e5;
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e7eb;
             outline: none;
-            margin-top: 8px;
+            margin-top: 12px;
             transition: all 0.2s ease;
         }
         
         input[type="range"]:hover {
-            background: #ddd;
+            background: #d1d5db;
         }
         
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #FF0080;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(255, 0, 128, 0.2);
+            box-shadow: 0 2px 6px rgba(255, 0, 128, 0.3);
         }
         
         input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(255, 0, 128, 0.3);
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(255, 0, 128, 0.4);
         }
         
         input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #FF0080;
             cursor: pointer;
             border: none;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(255, 0, 128, 0.2);
+            box-shadow: 0 2px 6px rgba(255, 0, 128, 0.3);
         }
         
         input[type="range"]::-moz-range-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(255, 0, 128, 0.3);
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(255, 0, 128, 0.4);
         }
         
         .value-display {
             display: inline-block;
-            margin-left: 10px;
+            margin-left: 12px;
             color: #FF0080;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 4px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
             transition: all 0.2s ease;
-            background: rgba(255, 0, 128, 0.05);
+            background: rgba(255, 0, 128, 0.08);
+            font-size: 14px;
         }
         
         .value-display:hover {
-            background: rgba(255, 0, 128, 0.1);
+            background: rgba(255, 0, 128, 0.15);
             transform: translateY(-1px);
         }
         
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #e5e5e5;
-            transition: all .3s ease;
-            border-radius: 24px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .toggle-slider:hover {
-            background-color: #ddd;
-        }
-        
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: all .3s ease;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        input:checked + .toggle-slider {
-            background-color: #FF0080;
-            box-shadow: inset 0 2px 4px rgba(255, 0, 128, 0.2);
-        }
-        
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-        
         .demo-note {
-            background: rgba(255, 0, 128, 0.05);
-            border: 1px solid rgba(255, 0, 128, 0.2);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #495057;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.05), rgba(255, 0, 255, 0.05));
+            border: 2px solid rgba(255, 0, 128, 0.15);
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 24px;
             text-align: center;
+            line-height: 1.6;
         }
         
         .demo-note strong {
             color: #FF0080;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
         }
         
         .divider {
-            height: 1px;
-            background: #e5e5e5;
-            margin: 25px 0;
+            height: 2px;
+            background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+            margin: 32px 0;
+            border-radius: 1px;
         }
         
         .instructions {
-            background: rgba(255, 0, 128, 0.05);
-            border: 1px solid rgba(255, 0, 128, 0.2);
-            padding: 15px;
-            border-radius: 6px;
-            font-size: 12px;
-            line-height: 1.5;
-            color: #495057;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(5, 150, 105, 0.05));
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #374151;
             margin-top: 20px;
         }
         
         .instructions strong {
-            color: #FF0080;
+            color: #059669;
+            font-weight: 700;
+            font-size: 16px;
         }
         
         #canvas-wrapper {
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -342,11 +325,11 @@
             height: 700px;
             position: relative;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 0, 128, 0.1);
+            border: 2px solid rgba(255, 0, 128, 0.1);
         }
         
         #canvas-wrapper:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 0, 128, 0.15);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15), 0 0 0 2px rgba(255, 0, 128, 0.2);
         }
         
         #canvas-wrapper canvas {
@@ -357,26 +340,27 @@
         
         .live-indicator {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             background: rgba(255, 255, 255, 0.95);
-            color: #FF0080;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: 500;
+            color: #374151;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255, 0, 128, 0.2);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            gap: 8px;
+            border: 2px solid rgba(255, 0, 128, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
         
         .live-dot {
-            width: 8px;
-            height: 8px;
-            background: #28a745;
+            width: 10px;
+            height: 10px;
+            background: #10b981;
             border-radius: 50%;
             animation: pulse 2s infinite ease-in-out;
             position: relative;
@@ -390,7 +374,7 @@
             right: -2px;
             bottom: -2px;
             border-radius: 50%;
-            background: #28a745;
+            background: #10b981;
             opacity: 0.3;
             animation: pulse-ring 2s infinite ease-in-out;
         }
@@ -418,15 +402,29 @@
         }
         
         .section-header {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             color: #FF0080;
-            margin-bottom: 20px;
-            margin-top: 10px;
+            margin-bottom: 24px;
+            margin-top: 16px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
+            position: relative;
+            padding-bottom: 8px;
         }
         
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(135deg, #FF0080 0%, #FF00FF 100%);
+            border-radius: 1px;
+        }
+        
+        /* Mobile Responsive Improvements */
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
@@ -435,68 +433,94 @@
                 width: 100%;
                 height: auto;
                 border-right: none;
-                border-bottom: 1px solid #e5e5e5;
-                padding: 20px;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 24px;
             }
             .canvas-container {
-                padding: 20px;
+                padding: 24px;
             }
             #canvas-wrapper {
                 width: 100%;
                 max-width: 650px;
                 height: 550px;
             }
+            h1 {
+                font-size: 24px;
+            }
+            .subtitle {
+                font-size: 15px;
+            }
         }
         
         @media (max-width: 768px) {
             .controls {
-                padding: 15px;
+                padding: 20px;
             }
             .type-selector {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 6px;
+                gap: 8px;
             }
             .type-btn {
-                padding: 10px 8px;
-                font-size: 11px;
+                padding: 12px 10px;
+                font-size: 12px;
             }
             h1 {
-                font-size: 20px;
+                font-size: 22px;
+            }
+            .subtitle {
+                font-size: 14px;
+            }
+            .info-box {
+                padding: 16px;
+                font-size: 14px;
+            }
+            .info-box strong {
+                font-size: 15px;
+            }
+            label {
+                font-size: 13px;
             }
             .canvas-container {
-                padding: 15px;
+                padding: 16px;
             }
             #canvas-wrapper {
-                height: 300px;
-                width: calc(100vw - 30px);
+                height: 400px;
+                width: calc(100vw - 32px);
                 max-width: none;
             }
             .live-indicator {
-                top: 10px;
-                right: 10px;
-                padding: 3px 8px;
-                font-size: 10px;
-                gap: 4px;
+                top: 12px;
+                right: 12px;
+                padding: 6px 12px;
+                font-size: 12px;
+                gap: 6px;
             }
             .live-dot {
-                width: 6px;
-                height: 6px;
+                width: 8px;
+                height: 8px;
             }
         }
         
         @media (max-width: 480px) {
             .controls {
-                padding: 12px;
+                padding: 16px;
             }
             .type-selector {
                 grid-template-columns: 1fr 1fr;
             }
             .control-group {
-                margin-bottom: 20px;
-                padding: 12px;
+                margin-bottom: 24px;
+                padding: 16px;
+            }
+            .info-box {
+                padding: 14px;
+                font-size: 13px;
+            }
+            h1 {
+                font-size: 20px;
             }
             #canvas-wrapper {
-                height: 263px;
+                height: 300px;
             }
         }
     </style>
@@ -504,19 +528,17 @@
 <body>
     <div class="container">
         <div class="controls">
-            <h1>PostParams: Interactive Demo</h1>
-            <div class="subtitle">Art that lives and breathes on-chain</div>
+            <h1>PostParams Interactive Demo</h1>
+            <div class="subtitle">Experience living art that evolves on-chain</div>
             
             <div class="info-box">
-                <strong>Your NFT's story doesn't end at mint</strong><br>
-               PostParams creates art that evolves with you, permanently recording every change on-chain.
-                <div style="margin-top: 10px;">
-                    <a href="https://artblocks.io/postparams" target="_blank" class="learn-more-link">Read the PostParams Docs→</a>
-                </div>
+                <strong>Your NFT's story doesn't end at mint</strong>
+                PostParams creates generative art that evolves with you, permanently recording every change on-chain. Artists can design parameters that collectors modify, creating a collaborative and ever-evolving piece.
+                <a href="https://artblocks.io/postparams" target="_blank" class="learn-more-link">Learn More About PostParams →</a>
             </div>
             
             <div class="instructions">
-                <strong>Try It:</strong> Modify the parameters below to evolve the living artwork and see how it transforms in real-time.
+                <strong>How to use:</strong> Adjust the parameters below to see how the artwork transforms in real-time. Each change represents what would be permanently recorded on the blockchain.
             </div>
             
             <div class="divider"></div>
@@ -524,7 +546,7 @@
             <div class="section-header">Artist-Defined Parameters</div>
             
             <div class="control-group">
-                <label data-tooltip="Choose the visual appearance style of your squiggle">TRAITS</label>
+                <label data-tooltip="Choose the visual style that defines your squiggle's appearance">Visual Style</label>
                 <div class="type-selector">
                     <button class="type-btn active" onclick="setType('normal')">Normal</button>
                     <button class="type-btn" onclick="setType('slinky')">Slinky</button>
@@ -536,17 +558,18 @@
             </div>
             
             <div class="control-group">
-                <label data-tooltip="Number of curve segments that make up the squiggle">Segments <span class="value-display" id="segmentsValue">16</span></label>
+                <label data-tooltip="Controls the number of curve segments that create the squiggle's path">Curve Segments <span class="value-display" id="segmentsValue">16</span></label>
                 <input type="range" id="segmentsSlider" min="12" max="20" value="16" oninput="updateSegments(this.value)">
             </div>
             
             <div class="control-group">
-                <label data-tooltip="Controls the height and intensity of the curves">Amplitude <span class="value-display" id="ampValue">1.0</span></label>
+                <label data-tooltip="Adjusts the height and dramatic effect of the curve variations">Wave Amplitude <span class="value-display" id="ampValue">1.0</span></label>
                 <input type="range" id="ampSlider" min="0.5" max="2" step="0.1" value="1" oninput="updateAmplitude(this.value)">
             </div>
             
             <div class="demo-note">
-                <strong>Demo Only:</strong> Real Chromie Squiggles are immutable. This shows how PostParams could work for future Art Blocks releases.
+                <strong>Demo Preview</strong>
+                This demonstrates PostParams capabilities using a Squiggle-inspired visualization. Actual Chromie Squiggles are immutable—this shows the potential for future Art Blocks releases.
             </div>
         </div>
         
@@ -554,7 +577,7 @@
             <div id="canvas-wrapper"></div>
             <div class="live-indicator">
                 <div class="live-dot"></div>
-                Demo Preview
+                Live Preview
             </div>
         </div>
     </div>
