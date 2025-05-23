@@ -278,7 +278,7 @@
             font-size: 14px;
             color: #374151;
             margin-bottom: 24px;
-            text-align: center;
+            text-align: left;
             line-height: 1.6;
         }
         
@@ -296,21 +296,37 @@
             border-radius: 1px;
         }
         
-        .instructions {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(5, 150, 105, 0.05));
-            border: 2px solid rgba(16, 185, 129, 0.2);
+        .possibilities-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(124, 58, 237, 0.05));
+            border: 2px solid rgba(139, 92, 246, 0.2);
             padding: 18px;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
             color: #374151;
-            margin-top: 20px;
+            margin-top: 16px;
         }
         
-        .instructions strong {
-            color: #059669;
+        .possibilities-box strong {
+            color: #7c3aed;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        
+        .possibilities-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .possibilities-box li {
+            margin-bottom: 8px;
+            color: #4b5563;
+        }
+        
+        .possibilities-box li:last-child {
+            margin-bottom: 0;
         }
         
         #canvas-wrapper {
@@ -409,19 +425,6 @@
             margin-top: 16px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            position: relative;
-            padding-bottom: 8px;
-        }
-        
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(135deg, #FF0080 0%, #FF00FF 100%);
-            border-radius: 1px;
         }
         
         /* Mobile Responsive Improvements */
@@ -528,17 +531,13 @@
 <body>
     <div class="container">
         <div class="controls">
-            <h1>PostParams Interactive Demo</h1>
+            <h1>PostParams Demo</h1>
             <div class="subtitle">Experience living art that evolves on-chain</div>
             
             <div class="info-box">
                 <strong>Your NFT's story doesn't end at mint</strong>
-                PostParams creates generative art that evolves with you, permanently recording every change on-chain. Artists can design parameters that collectors modify, creating a collaborative and ever-evolving piece.
+                PostParams transforms your art into a living conversation between artist, collector, and blockchain. Adjust the parameters below to see how the artwork evolves in real-time.
                 <a href="https://artblocks.io/postparams" target="_blank" class="learn-more-link">Learn More About PostParams →</a>
-            </div>
-            
-            <div class="instructions">
-                <strong>How to use:</strong> Adjust the parameters below to see how the artwork transforms in real-time. Each change represents what would be permanently recorded on the blockchain.
             </div>
             
             <div class="divider"></div>
@@ -546,7 +545,7 @@
             <div class="section-header">Artist-Defined Parameters</div>
             
             <div class="control-group">
-                <label data-tooltip="Choose the visual style that defines your squiggle's appearance">Visual Style</label>
+                <label data-tooltip="Choose the visual style that defines your squiggle's appearance">Traits</label>
                 <div class="type-selector">
                     <button class="type-btn active" onclick="setType('normal')">Normal</button>
                     <button class="type-btn" onclick="setType('slinky')">Slinky</button>
@@ -558,18 +557,28 @@
             </div>
             
             <div class="control-group">
-                <label data-tooltip="Controls the number of curve segments that create the squiggle's path">Curve Segments <span class="value-display" id="segmentsValue">16</span></label>
+                <label data-tooltip="Controls the number of curve segments that create the squiggle's path">Segments <span class="value-display" id="segmentsValue">16</span></label>
                 <input type="range" id="segmentsSlider" min="12" max="20" value="16" oninput="updateSegments(this.value)">
             </div>
             
             <div class="control-group">
-                <label data-tooltip="Adjusts the height and dramatic effect of the curve variations">Wave Amplitude <span class="value-display" id="ampValue">1.0</span></label>
+                <label data-tooltip="Adjusts the height and dramatic effect of the curve variations">Amplitude <span class="value-display" id="ampValue">1.0</span></label>
                 <input type="range" id="ampSlider" min="0.5" max="2" step="0.1" value="1" oninput="updateAmplitude(this.value)">
             </div>
             
             <div class="demo-note">
                 <strong>Demo Preview</strong>
                 This demonstrates PostParams capabilities using a Squiggle-inspired visualization. Actual Chromie Squiggles are immutable—this shows the potential for future Art Blocks releases.
+            </div>
+            
+            <div class="possibilities-box">
+                <strong>What's Possible with PostParams:</strong>
+                <ul>
+                    <li>Collector customization within artist-defined boundaries</li>
+                    <li>Collaborative art between artist and collector</li>
+                    <li>Parameters that configure art before physical production</li>
+                    <li>Community-driven networked experiences</li>
+                </ul>
             </div>
         </div>
         
